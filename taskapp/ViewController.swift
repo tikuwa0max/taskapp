@@ -11,11 +11,15 @@ import RealmSwift
 import UserNotifications
 
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,UISearchBarDelegate{
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     
     let realm = try! Realm()  // ←追加
+    
+    
     
     // DB内のタスクが格納されるリスト。
     // 日付近い順\順でソート：降順
@@ -23,10 +27,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)  // ←追加
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
+        
+        searchBar.enablesReturnKeyAutomatically = false
+        
+        
+        
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
     // MARK: UITableViewDataSourceプロトコルのメソッド
@@ -118,6 +130,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.reloadData()
     }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let realm = try! Realm()
+        
+        if searchText.isEmpty {
+            taskArray = realm.objects(Task.self)
+        } else {
+            taskArray = realm.objects(Task.self).filter("category LIKE %@", searchText )
+        }
+        
+        tableView.reloadData()
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

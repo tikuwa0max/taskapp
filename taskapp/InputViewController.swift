@@ -11,21 +11,21 @@ import RealmSwift
 import UserNotifications
 
 class InputViewController: UIViewController {
-
     
-
+    
+    
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var categoryTextField: UITextField!
     @IBOutlet weak var contentsTextView: UITextView!
     @IBOutlet weak var datePicker: UIDatePicker!
     
-     var task: Task!
+    var task: Task!
     let realm = try! Realm()    // 追加する
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target:self,action:#selector(dismissKeyboard))
         self.view.addGestureRecognizer(tapGesture)
         
@@ -35,7 +35,7 @@ class InputViewController: UIViewController {
         datePicker.date = task.date
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -58,7 +58,7 @@ class InputViewController: UIViewController {
         
         super.viewWillDisappear(animated)
     }
-
+    
     func setNotification(task: Task) {
         let content = UNMutableNotificationContent()
         // タイトルと内容を設定(中身がない場合メッセージ無しで音だけの通知になるので「(xxなし)」を表示する)
@@ -98,15 +98,15 @@ class InputViewController: UIViewController {
         }
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
